@@ -10,8 +10,10 @@ class TransacctionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: transactions.map((tx) {
+    return Container(
+      height: 300,
+      child: ListView.builder(
+        itemBuilder: (ctx, index) {
           return Card(
             child: Row(
               children: <Widget>[
@@ -22,17 +24,17 @@ class TransacctionList extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColorDark,
                       width: 2,
                     ),
                   ),
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    '\u{20B9}' + tx.amount.toString(),
+                    '\u{20B9}' + transactions[index].amount.toStringAsFixed(2),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.purple
+                        color: Theme.of(context).primaryColorDark
                     ),
                   ),
                 ),
@@ -40,21 +42,23 @@ class TransacctionList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      tx.title,
+                      transactions[index].title,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                        DateFormat.yMMMd().format(tx.date)
+                        DateFormat.yMMMd().format(transactions[index].date)
                     ),
                   ],
                 ),
               ],
             ),
           );
-        }).toList()
+        },
+          itemCount: transactions.length,
+      ),
     );
   }
 }
